@@ -5,15 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "../libs/stb_image.h"
+#include "../libs/stb_image_write.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
-
-void median_filter(unsigned char* input, unsigned char* output, int heigth, int width, int channels, int size);
+int median_filter(unsigned char* input_image, char* output_path, int height, int width, int channels, int size);
 
 
-int get_coords(int cord, int max_len);
+int get_cord(int cord, int max_len);
 
 #endif

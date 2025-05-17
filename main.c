@@ -1,29 +1,48 @@
-#include "functions.h"
+#include "src/functions.h"
 
-int main(void) {
+int main(int argc, char* argv[]) {
+    if(argc < 4 || argc > 5)
+    {
+        printf("Not valid command!\n");
+        return -1;
+    }
+    
+    char* input = argv[1];
+    char* mode = argv[2];
     // Загрузка изображения
     int width, height, channels;
-    unsigned char *image = stbi_load("input.png", &width, &height, &channels, 0);
+    unsigned char* image = stbi_load(input, &width, &height, &channels, 0);
     if (!image) {
         printf("Error loading image\n");
         return -1;
     }
 
-    // тестовый прикол, меням цвета местами
-    for(int i = 0; i < height * width * channels; i += channels)
+    // флаг результата, если 0 - все выполнилось
+    int res = 0;
+    if (argc == 5)
     {
-        char temp = image[i];
-        char temp_2 = image[i + 1];
-
-        image[i] = image[i + 2];
-        image[i + 1] = temp_2;
-        image[i + 2] = temp;
-
+        int val = atoi(argv[3]);
+        char* output_path = argv[4];
+        if (strcmp(mode, "-median") == 0) 
+        {
+            res = median_filter(image, output_path, height, width, channels, val);
+        }
+        else
+        {
+            printf("In progress\n");
+        }
     }
-    // Сохранение картинки
-    stbi_write_png("output.jpg", width, height, channels, image, width * channels);
+    else // argc == 4
+    {
+        printf("In progress\n");
+    }
+
+    if(res == 0)
+    {
+        printf("All done!\n");
+    }
+    
     // Освобождение памяти
     stbi_image_free(image);
-
     return 0;
 }
