@@ -8,9 +8,10 @@
 #include "../libs/stb_image.h"
 #include "../libs/stb_image_write.h"
 
-int median_filter(unsigned char* input_image, char* output_path, int height, int width, int channels, int size);
-
+int median_filter(char* input_path, char* output_path, int size);
 
 int get_cord(int cord, int max_len);
+
+int gaussian_blur(char* input_path, char* output_path, int size, double sigma);
 
 #endif
