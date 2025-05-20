@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "stb_image_write.h": "c",
-        "functions.h": "c",
-        "stb_image.h": "c"
-    }
-}
