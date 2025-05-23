@@ -14,4 +14,6 @@ int get_cord(int cord, int max_len);
 
 int gaussian_blur(char* input_path, char* output_path, int size, double sigma);
 
+int matrix_convolution(char* input_path, char* output_path, int mode);
+
 #endif

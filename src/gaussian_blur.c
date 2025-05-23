@@ -38,14 +38,12 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
     unsigned char* temp = (unsigned char*) malloc (width * height * channels * sizeof(unsigned char));
     if (!temp) 
     {
-        printf("Error loading image\n");
+        printf("Error: Memory allocation failed!\n");
         return -1;
     }
     
-    //memcpy(temp, image, sizeof(image));
-
     // calcute the kernel
-    double sum = 0;        // variable for normalizing
+    double sum = 0;         // variable for normalizing
     int center = size / 2;  // coords of the centre of kernel
     sigma *= sigma;         // only using (sigma ^ 2) in expression below
 
@@ -53,7 +51,9 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
     {
         kernel[i] = (double*) malloc (size * sizeof(double));
         if (!kernel[i]) 
-        {
+        {   
+            for(int k = 0; k < i; k++)
+                free(kernel[k]);
             printf("Error: Memory allocation failed!\n");
             return -1;
         }
@@ -79,29 +79,38 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
     double term = 0;
     // applying gaus blur
     int radius = size / 2;
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            for (int k = 0; k < channels; k++) {
+    for (int i = 0; i < height; i++) 
+    {
+        for (int j = 0; j < width; j++) 
+        {
+            for (int k = 0; k < channels; k++) 
+            {
                 double sum = 0.0;
 
-                for (int dy = -radius; dy <= radius; dy++) {
-                    for (int dx = -radius; dx <= radius; dx++) {
+                for (int dy = -radius; dy <= radius; dy++) 
+                {
+                    for (int dx = -radius; dx <= radius; dx++) 
+                    {
                         int y = get_cord(i + dy, height);
                         int x = get_cord(j + dx, width);
                         sum += image[(y * width + x) * channels + k] * kernel[dy + radius][dx + radius];
                     }
                 }
 
-                // Обрезаем значение до [0, 255] и записываем
-                if (sum < 0) sum = 0;
+                // fitting value into char size borders
                 if (sum > 255) sum = 255;
                 temp[(i * width + j) * channels + k] = sum;
             }
         }
     }
 
-    stbi_write_png(output_path, width, height, channels, temp, width * channels);
+    if(!stbi_write_png(output_path, width, height, channels, temp, width * channels))
+    {
+        printf("Error writing image\n");
+        return -1;
+    }
 
+    // freeing the data
     for(int i = 0; i < size; i++)
     {
         free(kernel[i]);
