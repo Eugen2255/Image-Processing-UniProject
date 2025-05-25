@@ -16,4 +16,8 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma);
 
 int matrix_convolution(char* input_path, char* output_path, int mode);
 
+unsigned char* gradation_gray(unsigned char* image, int height, int width, int channels);
+
+int grey_filter(char* input_path, char* output_path);
+
 #endif

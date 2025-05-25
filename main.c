@@ -52,6 +52,10 @@ int main(int argc, char* argv[]) {
         {
             res = matrix_convolution(input_path, output_path, 0);
         }
+        else if(strcmp(mode, "-grey") == 0)
+        {
+            res = grey_filter(input_path, output_path);
+        }
         else
         {
             printf("In progress\n");

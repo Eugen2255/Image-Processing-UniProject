@@ -39,7 +39,8 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
     }
     else if (mode == 1)
     {
-        coef = 4;
+        coef = 4; // edge detection
+        image = gradation_gray(image, height, width, channels);
     }
     else
     {
@@ -100,7 +101,7 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
                 // fitting value into char size borders
                 if (sum > 255) sum = 255;
                 else if (sum < 0) sum = 0;
-                temp[(i * width + j) * channels + k] = sum;
+                temp[(i * width + j) * channels + k] = sum;    
             }
         }
     }
