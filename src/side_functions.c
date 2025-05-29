@@ -5,18 +5,20 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "../libs/stb_image_write.h"
 
+// function for getting in case we go out of bounds
 int get_cord(int cord, int max_len)
 {
     if(cord < 0)
-        return 0;
+        return (-cord);
     else if (cord >= max_len)
-        return max_len - 1;
+        return 2 * max_len - cord - 2;
     else 
         return cord;
 }
 
 unsigned char* gradation_gray(unsigned char* image, int height, int width, int channels)
-{
+{   
+    // creating copy of the image
     unsigned char* temp = (unsigned char*) malloc (height * width * channels * sizeof(unsigned char));
     if (!temp) 
     {

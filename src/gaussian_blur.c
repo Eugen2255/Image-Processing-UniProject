@@ -3,15 +3,6 @@
 
 int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
 {
-     // Загрузка изображения
-    int width, height, channels;
-    unsigned char* image = stbi_load(input_path, &width, &height, &channels, 0);
-    if (!image) 
-    {
-        printf("Error loading image\n");
-        return -1;
-    }
-
     if (size <= 0) 
     {
         printf("Error: Filter size must be positive!\n");
@@ -22,8 +13,19 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
         printf("Error: Filter size must be odd!\n");
         return -1;
     }
+
+    // reading the image
+    int width, height, channels;
+    unsigned char* image = stbi_load(input_path, &width, &height, &channels, 0);
+    if (!image) 
+    {
+        printf("Error loading image\n");
+        return -1;
+    }
+
     if (size > height || size > width) 
     {
+        stbi_image_free(image);
         printf("Error: Filter size exceeds image dimensions!\n");
         return -1;
     }
@@ -31,6 +33,7 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
     double** kernel = (double**) malloc (size * sizeof(double*));
     if (!kernel) 
     {
+        stbi_image_free(image);
         printf("Error: Memory allocation failed!\n");
         return -1;
     }
@@ -38,6 +41,8 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
     unsigned char* temp = (unsigned char*) malloc (width * height * channels * sizeof(unsigned char));
     if (!temp) 
     {
+        stbi_image_free(image);
+        free(kernel);
         printf("Error: Memory allocation failed!\n");
         return -1;
     }
@@ -53,7 +58,11 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
         if (!kernel[i]) 
         {   
             for(int k = 0; k < i; k++)
+            {
                 free(kernel[k]);
+            }
+            free(temp);
+            stbi_image_free(image);
             printf("Error: Memory allocation failed!\n");
             return -1;
         }
@@ -68,7 +77,7 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
         }
     }
 
-    // Normalazing (sum of weight = 1)
+    // Normalazing (sum of weights = 1)
     for (int i = 0; i < size; i++) 
     {
         for (int j = 0; j < size; j++) 
@@ -87,6 +96,7 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
             {
                 double sum = 0.0;
 
+                // calcute new pixel value by applying gaus kernel
                 for (int dy = -radius; dy <= radius; dy++) 
                 {
                     for (int dx = -radius; dx <= radius; dx++) 
@@ -103,13 +113,26 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
             }
         }
     }
+    
 
-    if(!stbi_write_png(output_path, width, height, channels, temp, width * channels))
+
+    // saving image
+    int res;
+    if (strstr(output_path, ".png")) 
     {
-        printf("Error writing image\n");
-        return -1;
+        res = stbi_write_png(output_path, width, height, channels, image, width * channels);
+    }
+    else if (strstr(output_path, ".jpg"))
+    {
+        res = stbi_write_jpg(output_path, width, height, channels, image, 100);
+    } 
+    else 
+    {
+        printf("Wrong format. Use .png or .jpg\n");
+        res = 1;
     }
 
+   
     // freeing the data
     for(int i = 0; i < size; i++)
     {
@@ -118,5 +141,14 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
     free(kernel);
     free(temp);
     stbi_image_free(image);
-    return 0;
+
+    if(!res)
+    {
+        printf("Error writing image\n");
+        return -1;
+    }
+    else
+    {
+        return 0;    
+    }
 }

@@ -16,7 +16,7 @@
 
 int matrix_convolution(char* input_path, char* output_path, int mode)
 {
-    // Загрузка изображения
+    // reading image
     int width, height, channels;
     unsigned char* image = stbi_load(input_path, &width, &height, &channels, 0);
     if (!image) 
@@ -28,6 +28,7 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
     unsigned char* temp = (unsigned char*) malloc (width * height * channels * sizeof(unsigned char));
     if (!temp) 
     {
+        stbi_image_free(image);
         printf("Error: Memory allocation failed!\n");
         return -1;
     }
@@ -52,6 +53,8 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
     int** matrix = (int**) malloc (3 * sizeof(int*));
     if (!matrix) 
     {
+        free(temp);
+        stbi_image_free(image);
         printf("Error: Memory allocation failed!\n");
         return -1;
     }
@@ -65,6 +68,9 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
             {
                 free(matrix[k]);
             }
+            free(temp);
+            stbi_image_free(image);
+            free(matrix);
             printf("Error: Memory allocation failed!\n");
             return -1;
         }
@@ -90,7 +96,8 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
             {
                 double sum = 0;
                 for(int dy = -1; dy <= 1; dy++)
-                {
+                {   
+                    // calcute new pixel value by applying matrix
                     for(int dx = -1; dx <= 1; dx++)
                     {   
                         int y = get_cord(i + dy, height);
@@ -106,10 +113,21 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
         }
     }
 
-    if(!stbi_write_png(output_path, width, height, channels, temp, width * channels))
+
+     // saving image
+    int res;
+    if (strstr(output_path, ".png")) 
     {
-        printf("Error writing image\n");
-        return -1;
+        res = stbi_write_png(output_path, width, height, channels, temp, width * channels);
+    }
+    else if (strstr(output_path, ".jpg"))
+    {
+        res = stbi_write_jpg(output_path, width, height, channels, temp, 100);
+    } 
+    else 
+    {
+        printf("Wrong format. Use .png or .jpg\n");
+        res = 1;
     }
 
     // freeing the data
@@ -120,5 +138,13 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
     free(matrix);
     free(temp);
     stbi_image_free(image);
-    return 0;
+    if(!res)
+    {
+        printf("Error writing image\n");
+        return -1;
+    }
+    else
+    {
+        return 0;
+    }
 }

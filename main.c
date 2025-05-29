@@ -56,6 +56,10 @@ int main(int argc, char* argv[]) {
         {
             res = grey_filter(input_path, output_path);
         }
+        else if(strcmp(mode, "-hist") == 0)
+        {
+            res = histogram_equ(input_path, output_path);
+        }
         else
         {
             printf("In progress\n");

@@ -20,4 +20,6 @@ unsigned char* gradation_gray(unsigned char* image, int height, int width, int c
 
 int grey_filter(char* input_path, char* output_path);
 
+int histogram_equ(char* input_path, char* output_path);
+
 #endif
