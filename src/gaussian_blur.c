@@ -72,7 +72,7 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
             // getting coords relatively the centre of kernel
             int x = i - center;         
             int y = j - center;
-            kernel[i][j] = exp((x * x + y * y) / (-2 * sigma)) / (2 * 3.1415926535 * sigma); // by fornula
+            kernel[i][j] = exp((x * x + y * y) / (-2 * sigma)) / (2 * PI * sigma); // by fornula
             sum += kernel[i][j];
         }
     }
@@ -128,7 +128,7 @@ int gaussian_blur(char* input_path, char* output_path, int size, double sigma)
     } 
     else 
     {
-        printf("Wrong format. Use .png or .jpg\n");
+        printf("Unsupported format. Use .png or .jpg\n");
         res = 1;
     }
 

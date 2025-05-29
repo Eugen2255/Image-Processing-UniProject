@@ -8,6 +8,8 @@
 #include "../libs/stb_image.h"
 #include "../libs/stb_image_write.h"
 
+#define PI 3.1415926535
+
 int median_filter(char* input_path, char* output_path, int size);
 
 int get_cord(int cord, int max_len);
@@ -21,5 +23,9 @@ unsigned char* gradation_gray(unsigned char* image, int height, int width, int c
 int grey_filter(char* input_path, char* output_path);
 
 int histogram_equ(char* input_path, char* output_path);
+
+int rotate_image(char* input_path, char* output_path, double angle_degrees);
+
+int resize_bicubic(char* input_path, char* output_path, double scale_x, double scale_y);
 
 #endif

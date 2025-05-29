@@ -15,11 +15,15 @@ int main(int argc, char* argv[]) {
     int res = 1;
     if (argc == 5)
     {
-        int val = atoi(argv[3]);
+        double val = atof(argv[3]);
         char* output_path = argv[4];
         if (strcmp(mode, "-median") == 0) 
         {
             res = median_filter(input_path, output_path, val);
+        }
+        else if (strcmp(mode, "-rotate") == 0)
+        {
+            res = rotate_image(input_path, output_path, val);
         }
         else
         {
@@ -28,20 +32,24 @@ int main(int argc, char* argv[]) {
     }
     else if (argc == 6)
     {
-        int size = atoi(argv[3]);
-        double sigma = atof(argv[4]);
+        double val1 = atof(argv[3]);
+        double val2 = atof(argv[4]);
         
         char* output_path = argv[5];
         if (strcmp(mode, "-gaus") == 0) 
         {
-            res = gaussian_blur(input_path, output_path, size, sigma);
+            res = gaussian_blur(input_path, output_path, val1, val2);
+        }
+        else if(strcmp(mode, "-resize") == 0)
+        {
+            res = resize_bicubic(input_path, output_path, val1, val2);
         }
         else
         {
             printf("In progress\n");
         }
     }
-    else // argc == 4
+    else if (argc == 4)
     {
         char* output_path = argv[3];
         if (strcmp(mode, "-edge") == 0)
@@ -64,6 +72,10 @@ int main(int argc, char* argv[]) {
         {
             printf("In progress\n");
         }
+    }
+    else
+    {
+        printf("Unknow command!\n");
     }
 
     if(res == 0)

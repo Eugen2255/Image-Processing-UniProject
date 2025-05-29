@@ -31,7 +31,7 @@ int grey_filter(char* input_path, char* output_path)
     } 
     else 
     {
-        printf("Wrong format. Use .png or .jpg\n");
+        printf("Unsupported format. Use .png or .jpg\n");
         stbi_image_free(image);
         return -1;
     }

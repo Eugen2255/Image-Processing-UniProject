@@ -82,7 +82,7 @@ int median_filter(char* input_path, char* output_path, int size)
     } 
     else 
     {
-        printf("Wrong format. Use .png or .jpg\n");
+        printf("Unsupported. Use .png or .jpg\n");
         res = 1;
     }
 

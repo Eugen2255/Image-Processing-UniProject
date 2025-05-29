@@ -126,7 +126,7 @@ int matrix_convolution(char* input_path, char* output_path, int mode)
     } 
     else 
     {
-        printf("Wrong format. Use .png or .jpg\n");
+        printf("Unsupported format. Use .png or .jpg\n");
         res = 1;
     }
 
