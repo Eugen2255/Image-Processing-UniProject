@@ -21,7 +21,9 @@ Handles command-line interface for various image processing functions. Supported
 In brackets - parameters, except input and output paths.
 
 ## Building
-Use programms from scripts folder **.bat** for windows and **.sh** for linux 
+Use programms from scripts folder **.bat** for windows and **.sh** for linux,
+
+or ```gcc -o imgproc.exe main.c src/median_filter.c src/side_functions.c src/gaussian_blur.c src/convolution.c src/greing.c src/histogram.c src/rotation.c src/resize.c```
 
 **imgproc.exe** will be created.
 
