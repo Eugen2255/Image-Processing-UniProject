@@ -20,7 +20,7 @@ Handles command-line interface for various image processing functions. Supported
   
 In brackets - parameters, except input and output paths.
 
-## Builing
+## Building
 Use programms from scripts folder **.bat** for windows and **.sh** for linux 
 
 **imgproc.exe** will be created.
