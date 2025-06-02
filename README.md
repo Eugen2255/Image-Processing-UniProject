@@ -2,21 +2,21 @@
 Project for imperative programming course.
 Handles command-line interface for various image processing functions. Supported operations:
 
-  - _Median filter_ (kernel size)
+  - _Median filter_ (kernel size) ```-median```
   
-  - _Image rotation_ (angle)
+  - _Image rotation_ (angle) ```-rotate```
   
-  - _Gaussian blur_ (kernel size, sigma)
+  - _Gaussian blur_ (kernel size, sigma) ```-gauss```
   
-  - _Bicubic resizing_ (scale_x, scale_y)
+  - _Bicubic resizing_ (scale_x, scale_y) ```-resize```
   
-  - _Edge detection_
+  - _Edge detection_ ```-edge```
   
-  - _Sharpening_
+  - _Sharpening_  ```-sharp```
   
-  - _Grayscale conversion_
+  - _Grayscale conversion_ ```-gray```
   
-  - _Histogram equalization_
+  - _Histogram equalization_ ```-hist```
   
 In brackets - parameters, except input and output paths.
 
