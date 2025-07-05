@@ -40,3 +40,17 @@ With 2 parameters: ``` ./imgproc input_path mode value1 value2 output_path ```
 
 ## Testing
 After compiling you can use scripts/tests.bat it will show products of filters.
+
+## Examples
+### **Histogram equalization** and **Grayscale conversion**
+![b w](https://github.com/user-attachments/assets/5778e08c-e1a0-412f-bbed-6f2fb6daf164)
+
+### Using edge detection after **Histogram equalization**
+![edge_det](https://github.com/user-attachments/assets/346b4298-66b1-4589-acd1-032ea8698be4)
+
+### **Blurs**
+![Blurs](https://github.com/user-attachments/assets/6b788cd6-03d3-485d-bd06-58cc1aa82497)
+
+### **Resize**
+![resize](https://github.com/user-attachments/assets/624e8f0f-754e-4d65-b4cf-842611d3ff05)
+
