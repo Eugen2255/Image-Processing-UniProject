@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 # Компиляция проекта
 echo "Compilation..."
 gcc -o imgproc.exe \
-    main.c \
+    src/main.c \
     src/median_filter.c \
     src/side_functions.c \
     src/gaussian_blur.c \

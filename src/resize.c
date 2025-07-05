@@ -66,24 +66,9 @@ static double bicubic_interpolate(unsigned char* src, int width, int height, dou
             int yj = y0 + j;
 
              // Clamp to image boundaries
-            if(xi < 0)
-            {
-                xi = 0;
-            }
-            else if(xi >= width)
-            {
-                xi = width - 1;
-            }
-        
-            if(yj < 0)
-            {
-                yj = 0;
-            }
-            else if (yj >= height)
-            {
-                yj = height - 1;
-            }
-
+            xi = get_cord(xi, width);
+            yj = get_cord(yj, height);
+            
             // Calculate weights in x and y directions
             double wx = bicubic_weight(i - dx);
             double wy = bicubic_weight(j - dy);

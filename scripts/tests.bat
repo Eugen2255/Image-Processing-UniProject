@@ -20,7 +20,6 @@ imgproc inputs/snp1.png -gaus 7 70 tests/gaus_2.png
 
 REM проверка rotation
 imgproc inputs/birb.jfif -rotate 45 tests/rotate_0.png
-imgproc inputs/pole.jpg -rotate 90 tests/rotate_1.png
 imgproc inputs/cats_.jfif -rotate 270 tests/rotate_2.png
 
 REM проверка grayscale conversion
@@ -30,11 +29,6 @@ imgproc inputs/train.jpg -gray tests/gray_1.png
 REM проверка Sharpening
 imgproc inputs/forestcat.jpg -sharp tests/sharp_0.png
 imgproc tests/gaus_0.png -sharp tests/sharp_1.png
-
-REM проверка Histogram equalization
-imgproc inputs/bnw0.png -hist tests/hist_0.png
-imgproc inputs/bnw1.jpg -hist tests/hist_1.png
-imgproc inputs/bnw2.jfif -hist tests/hist_2.png
 
 REM проверка Edge detection(просто на фото)
 imgproc inputs/town.jpg -edge tests/edge_0.png

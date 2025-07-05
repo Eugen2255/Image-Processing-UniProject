@@ -42,6 +42,7 @@ int rotate_image(char* input_path, char* output_path, double angle_degrees)
     double sin_angle = sin(angle_rad);
 
     // Allocate and initialize output image buffer (filled with zeros/black)
+    // change 0 in the memset to get other color
     unsigned char* rotated_image = (unsigned char*)malloc(width * height * channels);
     memset(rotated_image, 0, width * height * channels);
 
@@ -56,7 +57,7 @@ int rotate_image(char* input_path, char* output_path, double angle_degrees)
 
             // Apply rotation matrix:
             // [x'] = [cosθ -sinθ][x]
-            // [y']   [sinθ  cosθ][y]
+            // [y'] = [sinθ  cosθ][y]
             int new_x = (int)(dx * cos_angle - dy * sin_angle + center_x);
             int new_y = (int)(dx * sin_angle + dy * cos_angle + center_y);
 
@@ -76,7 +77,7 @@ int rotate_image(char* input_path, char* output_path, double angle_degrees)
     }
 
     // Save rotated image in specified format
-    int res;
+    int res = 0;
     if (strstr(output_path, ".png")) 
     {
         res = stbi_write_png(output_path, width, height, channels, rotated_image, width * channels);
